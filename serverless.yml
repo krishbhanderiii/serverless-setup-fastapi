@@ -1,0 +1,37 @@
+org: accelate
+
+app: demo5
+
+service: demo7
+
+provider:
+  name: aws
+  runtime: python3.10
+  # architecture: 'x86_64'
+  region : ap-south-1
+  stage: dev       
+
+functions:
+  app:
+  #  package:
+  #   include:
+  #    - "main.py"
+  #    - "requirements.txt"
+  #   #  - "model/*"
+  #   # - "model/*"
+
+
+   handler: main.handler
+    # environment:
+    #   STAGE: ${self:provider.stage}
+    # layers:
+    #   - { Ref: PythonRequirementsLambdaLayer }
+   events:
+    - http:
+        method: any
+        path: /{proxy+}
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+
